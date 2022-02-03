@@ -47,3 +47,23 @@ jobs:
         run: |
           yarn install
           yarn build
+
+      - name: zip distributions
+        run: zip -r djangogit.zip ./client/dist ./server ./appspec.yml ./scripts
+        
+      - name: AWS configure credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./djangogit.zip s3://djangogit/public/
+
+      - name: deploy with AWS codeDeploy
+        run: aws deploy create-deployment
+          --application-name ec2-auto_upload-git
+          --deployment-config-name CodeDeployDefault.OneAtATime
+          --deployment-group-name EC2-Django-git
+          --s3-location bucket=djangogit,bundleType=zip,key=public/djangogit.zip
