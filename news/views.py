@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator
 from .models import *
 
 # -2022.01.24 park_jong_won
@@ -21,8 +22,16 @@ def index(req):
     else:
         logger.info("index GET log test")
 
+    query = "select n.n_id, p_id, cd_id, n_title, nd_img, n_input, o_link, nso_id, nso_content from News n inner join N_summarization_one nso on n.n_id = nso.n_id"
+    news_list = News.objects.raw(query) #models.py Board 클래스의 모든 객체를 board_list에 담음
+    # news_list 페이징 처리
+    page = req.GET.get('page', '1') #GET 방식으로 정보를 받아오는 데이터
+    paginator = Paginator(news_list, '10') #Paginator(분할될 객체, 페이지 당 담길 객체수)
+    page_obj = paginator.page(page) #페이지 번호를 받아 해당 페이지를 리턴 get_page 권장
+
     # return render(req, "index.html", {'banner': ns})
-    return render(req, "index.html")
+    return render(req, "index.html", {'page_obj':page_obj, 'news_list':news_list})
+
 
 # def i_sum(req):
 #     raw = f"select ns_id, ns_content from N_summarization where ns_id = 9"
