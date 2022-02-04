@@ -259,8 +259,8 @@
                   {% if page_number >= page_obj.number|add:-5 and page_number <= page_obj.number|add:5 %}
                     {% if page_number == page_obj.number %}
 
-                      {% for news in news_list %}
-                        {% if forloop.counter > page_number|add:-1|mul:10 and forloop.counter <= page_number|mul:10 %}
+                      {% for news in news_list100 %}
+                        {% if forloop.counter > page_number|add:-1|mul:3 and forloop.counter <= page_number|mul:3 %}
                         <div class="row mb-5">
                           <div class="col-lg-6">
                             <img
@@ -277,14 +277,12 @@
                             <a href="{% url 'travel' %}" class="font-weight-bold text-dark pt-2">Read Article</a>
                           </div>
                         </div>
-
-                      {% endif %}
-                    {% endfor %}
+                        {% endif %}
+                      {% endfor %}
 
                     {% endif %}
                   {% endif %}
                 {% endfor %}
-
               </div>
             </div>
             <!-- 페이징처리 끝 -->

@@ -8,11 +8,8 @@ logger = logging.getLogger('news')
 
 
 # Create your views here.
-def index(req):
-    raw = f"select ns_id, ns_content from N_summarization where ns_id = 3"
-    NC = N_summarization.objects.raw(raw)
-    # ns = NC[0].ns_content
 
+def log(req):
     if req.method == 'POST':
         # form = TestForm(req.POST)
         form = req.POST
@@ -22,37 +19,26 @@ def index(req):
     else:
         logger.info("index GET log test")
 
-    query = "select n.n_id, p_id, cd_id, n_title, nd_img, n_input, o_link, nso_id, nso_content from News n inner join N_summarization_one nso on n.n_id = nso.n_id"
-    news_list = News.objects.raw(query) #models.py Board 클래스의 모든 객체를 board_list에 담음
-    # news_list 페이징 처리
+def want_category(c_id):
+    query = f"""
+        select n.n_id, p_id, n.cd_id, n_title, nd_img, n_input, o_link, nso_id, nso_content, c_id 
+        from News n 
+        inner join N_summarization_one nso on n.n_id = nso.n_id 
+        inner join N_category_detail det on n.cd_id = det.cd_id
+        where c_id = {c_id}"""
+    return query
+
+def index(req):
+
+    log(req)
+    query100 = want_category(100)
+    news_list100 = News.objects.raw(query100) #models.py Board 클래스의 모든 객체를 board_list에 담음
+    # news_list100 페이징 처리
     page = req.GET.get('page', '1') #GET 방식으로 정보를 받아오는 데이터
-    paginator = Paginator(news_list, '10') #Paginator(분할될 객체, 페이지 당 담길 객체수)
+    paginator = Paginator(news_list100, '10') #Paginator(분할될 객체, 페이지 당 담길 객체수)
     page_obj = paginator.page(page) #페이지 번호를 받아 해당 페이지를 리턴 get_page 권장
 
-    # return render(req, "index.html", {'banner': ns})
-    return render(req, "index.html", {'page_obj':page_obj, 'news_list':news_list})
-
-
-# def i_sum(req):
-#     raw = f"select ns_id, ns_content from N_summarization where ns_id = 9"
-#     NC = N_summarization.objects.raw(raw)
-#     ns = NC[0].ns_content
-
-#     return render(req, "index.html", {'i_sum': ns})
-
-# def i_sum2(req):
-#     raw = f"select ns_id, ns_content from N_summarization where ns_id = 5"
-#     NC = N_summarization.objects.raw(raw)
-#     ns = NC[0].ns_content
-
-#     return render(req, "index.html", {'i_sum2': ns})
-
-# def i_sum3(req):
-#     raw = f"select ns_id, ns_content from N_summarization where ns_id = 7"
-#     NC = N_summarization.objects.raw(raw)
-#     ns = NC[0].ns_content
-
-#     return render(req, "index.html", {'i_sum3': ns})        
+    return render(req, "index.html", {'page_obj':page_obj, 'news_list100':news_list100})
 
 
 def author(req):
