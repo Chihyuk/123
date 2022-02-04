@@ -166,82 +166,12 @@
             </nav>
           </div>
         </header>
+
+        {% load mathfilters %}
         <div class="container">
-          <div class="banner-top-thumb-wrap">
-          </div>
-          <div class="row">
-            <div class="owl-carousel owl-theme" id="main-banner-carousel">
-              <div class="item">
-                <div class="carousel-content-wrapper mb-2">
-                  <div class="carousel-content">
-                    <h1 class="font-weight-bold">
-                      <a class="nav-link" href="{% url 'banner1' %}">진중권 “오픈북? 그렇다고 부모가 보진 않아” 유시민 “모든 정보, 검찰의 주장”</a>
-                    </h1>
-                    <h5 class="font-weight-normal  m-0">
-                      <p style="color:black;">{{ banner }}</p>
-                    </h5>
-                  </div>
-                  <div class="carousel-image">
-                    <img
-                      src="https://pds.joongang.co.kr/news/component/htmlphoto_mmdata/202001/02/b005b352-279a-4fa7-9a1c-7c07353fc3d2.jpg"
-                      alt="" />
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="carousel-content-wrapper mb-2">
-                  <div class="carousel-content">
-                    <h1 class="font-weight-bold">
-                      <a class="nav-link" href="{% url 'banner1' %}">강원, 새해 첫날부터 산불·추락사 등 사건사고 잇따라</a>
-                    </h1>
-                    <h5 class="font-weight-normal  m-0">
-                      <p style="color:black;">{{ banner }}</p>
-                    </h5>
-                  </div>
-                  <div class="carousel-image">
-                    <img
-                      src="https://imgnews.pstatic.net/image/003/2020/01/01/NISI20200101_0000455879_web_20200101231840_20200101232403833.jpg?type=w647"
-                      alt="" />
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="carousel-content-wrapper mb-2">
-                  <div class="carousel-content">
-                    <h1 class="font-weight-bold">
-                      <a class="nav-link" href="{% url 'banner1' %}">부산 사하구 신평동 강변대로서 4중 추돌…2명 부상</a>
-                    </h1>
-                    <h5 class="font-weight-normal  m-0">
-                      <p style="color:black;">{{ banner }}</p>
-                    </h5>
-                  </div>
-                  <div class="carousel-image">
-                    <img
-                      src="https://imgnews.pstatic.net/image/214/2020/01/01/0001004439_001_20200101221504575.jpg?type=w647"
-                      alt="" />
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="carousel-content-wrapper mb-2">
-                  <div class="carousel-content">
-                    <h1 class="font-weight-bold">
-                      <a class="nav-link" href="{% url 'banner1' %}">동해해경청, 새해첫날 독도 해상서 조업중 50대 뇌출혈 환자 긴급 이송</a>
-                    </h1>
-                    <h5 class="font-weight-normal  m-0">
-                      <p style="color:black;">{{ banner }}</p>
-                    </h5>
-                  </div>
-                  <div class="carousel-image">
-                    <img
-                      src="https://imgnews.pstatic.net/image/016/2020/01/01/202001012143004648513_20200101215104_01_20200101215301629.jpg?type=w647"
-                      alt="" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+
           <div class="world-news">
+            
             <div class="row">
               <div class="col-sm-12">
                 <div class="d-flex position-relative  float-left">
@@ -249,16 +179,15 @@
                 </div>
               </div>
             </div>
-
+      
             <!-- 내용 처리 시작 -->
-            {% load mathfilters %}
             <div id="autocontent">
               <div class="page-list" style="margin-top: 2rem;">
                 <!-- 페이지리스트 -->
-                {% for page_number in page_obj.paginator.page_range %}
-                  {% if page_number >= page_obj.number|add:-5 and page_number <= page_obj.number|add:5 %}
-                    {% if page_number == page_obj.number %}
-
+                {% for page_number in page_obj100.paginator.page_range %}
+                  {% if page_number >= page_obj100.number|add:-5 and page_number <= page_obj100.number|add:5 %}
+                    {% if page_number == page_obj100.number %}
+      
                       {% for news in news_list100 %}
                         {% if forloop.counter > page_number|add:-1|mul:3 and forloop.counter <= page_number|mul:3 %}
                         <div class="row mb-5">
@@ -279,27 +208,26 @@
                         </div>
                         {% endif %}
                       {% endfor %}
-
+      
                     {% endif %}
                   {% endif %}
                 {% endfor %}
               </div>
             </div>
             <!-- 페이징처리 끝 -->
-
+      
           </div>
         </div>
-
-
-
+      
+      
+      
         <!-- 페이징처리 시작 -->
-        {% load mathfilters %}
           <div id="paging">
             <ul class="pagination justify-content-center" style="margin-top: 2rem;">
               <!-- 이전페이지 -->
-              {% if page_obj.has_previous %}
+              {% if page_obj100.has_previous %}
               <li class="page-item">
-                <a class="page-link" href="?&page={{ page_obj.previous_page_number }}">이전</a>
+                <a class="page-link" href="?&page={{ page_obj100.previous_page_number }}">이전</a>
                 <!-- href로 뎁스 설정 -->
               </li>
               {% else %}
@@ -308,10 +236,10 @@
               </li>
               {% endif %}
                 <!-- 페이지리스트 -->
-                {% for page_number in page_obj.paginator.page_range %}
-                  {% if page_number >= page_obj.number|add:-5 and page_number <= page_obj.number|add:5 %}
-                    {% if page_number == page_obj.number %}
-
+                {% for page_number in page_obj100.paginator.page_range %}
+                  {% if page_number >= page_obj100.number|add:-5 and page_number <= page_obj100.number|add:5 %}
+                    {% if page_number == page_obj100.number %}
+      
                       <li class="page-item active" aria-current="page">
                         <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
                       </li>
@@ -323,9 +251,9 @@
                   {% endif %}
                 {% endfor %}
               <!-- 다음페이지 -->
-              {% if page_obj.has_next %}
+              {% if page_obj100.has_next %}
                 <li class="page-item">
-                  <a class="page-link" href="?&page={{ page_obj.next_page_number }}">다음</a>
+                  <a class="page-link" href="?&page={{ page_obj100.next_page_number }}">다음</a>
                 </li>
               {% else %}
                 <li class="page-item disabled">
@@ -335,5 +263,490 @@
             </ul>
         </div>
         <!-- 페이징처리 끝 -->
+
+        <div class="container">
+
+          <div class="world-news">
+            
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="d-flex position-relative  float-left">
+                  <h3 class="section-title">경제</h3>
+                </div>
+              </div>
+            </div>
+      
+            <!-- 내용 처리 시작 -->
+            <div id="autocontent">
+              <div class="page-list" style="margin-top: 2rem;">
+                <!-- 페이지리스트 -->
+                {% for page_number in page_obj101.paginator.page_range %}
+                  {% if page_number >= page_obj101.number|add:-5 and page_number <= page_obj101.number|add:5 %}
+                    {% if page_number == page_obj101.number %}
+      
+                      {% for news in news_list101 %}
+                        {% if forloop.counter > page_number|add:-1|mul:3 and forloop.counter <= page_number|mul:3 %}
+                        <div class="row mb-5">
+                          <div class="col-lg-6">
+                            <img
+                            src="{{ news.nd_img }}"
+                            class="img-fluid1" alt="world-news" />
+                          </div>
+                          <div class="col-lg-6">
+                            <h1 class="font-weight-600 mt-5">
+                              {{ news.n_title }}
+                            </h1>
+                            <p>
+                              {{ news.nso_content }}
+                            </p>
+                            <a href="{% url 'travel' %}" class="font-weight-bold text-dark pt-2">Read Article</a>
+                          </div>
+                        </div>
+                        {% endif %}
+                      {% endfor %}
+      
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <!-- 페이징처리 끝 -->
+      
+          </div>
+        </div>
+      
+      
+      
+        <!-- 페이징처리 시작 -->
+          <div id="paging">
+            <ul class="pagination justify-content-center" style="margin-top: 2rem;">
+              <!-- 이전페이지 -->
+              {% if page_obj101.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?&page={{ page_obj101.previous_page_number }}">이전</a>
+                <!-- href로 뎁스 설정 -->
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+              </li>
+              {% endif %}
+                <!-- 페이지리스트 -->
+                {% for page_number in page_obj101.paginator.page_range %}
+                  {% if page_number >= page_obj101.number|add:-5 and page_number <= page_obj101.number|add:5 %}
+                    {% if page_number == page_obj101.number %}
+      
+                      <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
+                      </li>
+                    {% else %}
+                      <li class="page-item">
+                        <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
+                      </li>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              <!-- 다음페이지 -->
+              {% if page_obj101.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?&page={{ page_obj101.next_page_number }}">다음</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                </li>
+              {% endif %}
+            </ul>
+        </div>
+        <!-- 페이징처리 끝 -->
+
+        <div class="container">
+
+          <div class="world-news">
+            
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="d-flex position-relative  float-left">
+                  <h3 class="section-title">사회</h3>
+                </div>
+              </div>
+            </div>
+      
+            <!-- 내용 처리 시작 -->
+            <div id="autocontent">
+              <div class="page-list" style="margin-top: 2rem;">
+                <!-- 페이지리스트 -->
+                {% for page_number in page_obj102.paginator.page_range %}
+                  {% if page_number >= page_obj102.number|add:-5 and page_number <= page_obj102.number|add:5 %}
+                    {% if page_number == page_obj102.number %}
+      
+                      {% for news in news_list102 %}
+                        {% if forloop.counter > page_number|add:-1|mul:3 and forloop.counter <= page_number|mul:3 %}
+                        <div class="row mb-5">
+                          <div class="col-lg-6">
+                            <img
+                            src="{{ news.nd_img }}"
+                            class="img-fluid1" alt="world-news" />
+                          </div>
+                          <div class="col-lg-6">
+                            <h1 class="font-weight-600 mt-5">
+                              {{ news.n_title }}
+                            </h1>
+                            <p>
+                              {{ news.nso_content }}
+                            </p>
+                            <a href="{% url 'travel' %}" class="font-weight-bold text-dark pt-2">Read Article</a>
+                          </div>
+                        </div>
+                        {% endif %}
+                      {% endfor %}
+      
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <!-- 페이징처리 끝 -->
+      
+          </div>
+        </div>
+      
+      
+      
+        <!-- 페이징처리 시작 -->
+          <div id="paging">
+            <ul class="pagination justify-content-center" style="margin-top: 2rem;">
+              <!-- 이전페이지 -->
+              {% if page_obj102.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?&page={{ page_obj102.previous_page_number }}">이전</a>
+                <!-- href로 뎁스 설정 -->
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+              </li>
+              {% endif %}
+                <!-- 페이지리스트 -->
+                {% for page_number in page_obj102.paginator.page_range %}
+                  {% if page_number >= page_obj102.number|add:-5 and page_number <= page_obj102.number|add:5 %}
+                    {% if page_number == page_obj102.number %}
+      
+                      <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
+                      </li>
+                    {% else %}
+                      <li class="page-item">
+                        <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
+                      </li>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              <!-- 다음페이지 -->
+              {% if page_obj102.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?&page={{ page_obj102.next_page_number }}">다음</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                </li>
+              {% endif %}
+            </ul>
+        </div>
+        <!-- 페이징처리 끝 -->
+
+
+        <div class="container">
+
+          <div class="world-news">
+            
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="d-flex position-relative  float-left">
+                  <h3 class="section-title">생활/문화</h3>
+                </div>
+              </div>
+            </div>
+      
+            <!-- 내용 처리 시작 -->
+            <div id="autocontent">
+              <div class="page-list" style="margin-top: 2rem;">
+                <!-- 페이지리스트 -->
+                {% for page_number in page_obj103.paginator.page_range %}
+                  {% if page_number >= page_obj103.number|add:-5 and page_number <= page_obj103.number|add:5 %}
+                    {% if page_number == page_obj103.number %}
+      
+                      {% for news in news_list103 %}
+                        {% if forloop.counter > page_number|add:-1|mul:3 and forloop.counter <= page_number|mul:3 %}
+                        <div class="row mb-5">
+                          <div class="col-lg-6">
+                            <img
+                            src="{{ news.nd_img }}"
+                            class="img-fluid1" alt="world-news" />
+                          </div>
+                          <div class="col-lg-6">
+                            <h1 class="font-weight-600 mt-5">
+                              {{ news.n_title }}
+                            </h1>
+                            <p>
+                              {{ news.nso_content }}
+                            </p>
+                            <a href="{% url 'travel' %}" class="font-weight-bold text-dark pt-2">Read Article</a>
+                          </div>
+                        </div>
+                        {% endif %}
+                      {% endfor %}
+      
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <!-- 페이징처리 끝 -->
+      
+          </div>
+        </div>
+      
+      
+      
+        <!-- 페이징처리 시작 -->
+          <div id="paging">
+            <ul class="pagination justify-content-center" style="margin-top: 2rem;">
+              <!-- 이전페이지 -->
+              {% if page_obj103.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?&page={{ page_obj103.previous_page_number }}">이전</a>
+                <!-- href로 뎁스 설정 -->
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+              </li>
+              {% endif %}
+                <!-- 페이지리스트 -->
+                {% for page_number in page_obj103.paginator.page_range %}
+                  {% if page_number >= page_obj103.number|add:-5 and page_number <= page_obj103.number|add:5 %}
+                    {% if page_number == page_obj103.number %}
+      
+                      <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
+                      </li>
+                    {% else %}
+                      <li class="page-item">
+                        <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
+                      </li>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              <!-- 다음페이지 -->
+              {% if page_obj103.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?&page={{ page_obj103.next_page_number }}">다음</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                </li>
+              {% endif %}
+            </ul>
+        </div>
+        <!-- 페이징처리 끝 -->
+
+
+        <div class="container">
+
+          <div class="world-news">
+            
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="d-flex position-relative  float-left">
+                  <h3 class="section-title">세계</h3>
+                </div>
+              </div>
+            </div>
+      
+            <!-- 내용 처리 시작 -->
+            <div id="autocontent">
+              <div class="page-list" style="margin-top: 2rem;">
+                <!-- 페이지리스트 -->
+                {% for page_number in page_obj104.paginator.page_range %}
+                  {% if page_number >= page_obj104.number|add:-5 and page_number <= page_obj104.number|add:5 %}
+                    {% if page_number == page_obj104.number %}
+      
+                      {% for news in news_list104 %}
+                        {% if forloop.counter > page_number|add:-1|mul:3 and forloop.counter <= page_number|mul:3 %}
+                        <div class="row mb-5">
+                          <div class="col-lg-6">
+                            <img
+                            src="{{ news.nd_img }}"
+                            class="img-fluid1" alt="world-news" />
+                          </div>
+                          <div class="col-lg-6">
+                            <h1 class="font-weight-600 mt-5">
+                              {{ news.n_title }}
+                            </h1>
+                            <p>
+                              {{ news.nso_content }}
+                            </p>
+                            <a href="{% url 'travel' %}" class="font-weight-bold text-dark pt-2">Read Article</a>
+                          </div>
+                        </div>
+                        {% endif %}
+                      {% endfor %}
+      
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <!-- 페이징처리 끝 -->
+      
+          </div>
+        </div>
+      
+      
+      
+        <!-- 페이징처리 시작 -->
+          <div id="paging">
+            <ul class="pagination justify-content-center" style="margin-top: 2rem;">
+              <!-- 이전페이지 -->
+              {% if page_obj104.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?&page={{ page_obj104.previous_page_number }}">이전</a>
+                <!-- href로 뎁스 설정 -->
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+              </li>
+              {% endif %}
+                <!-- 페이지리스트 -->
+                {% for page_number in page_obj104.paginator.page_range %}
+                  {% if page_number >= page_obj104.number|add:-5 and page_number <= page_obj104.number|add:5 %}
+                    {% if page_number == page_obj104.number %}
+      
+                      <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
+                      </li>
+                    {% else %}
+                      <li class="page-item">
+                        <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
+                      </li>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              <!-- 다음페이지 -->
+              {% if page_obj104.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?&page={{ page_obj104.next_page_number }}">다음</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                </li>
+              {% endif %}
+            </ul>
+        </div>
+        <!-- 페이징처리 끝 -->
+
+
+        <div class="container">
+
+          <div class="world-news">
+            
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="d-flex position-relative  float-left">
+                  <h3 class="section-title">IT/과학</h3>
+                </div>
+              </div>
+            </div>
+      
+            <!-- 내용 처리 시작 -->
+            <div id="autocontent">
+              <div class="page-list" style="margin-top: 2rem;">
+                <!-- 페이지리스트 -->
+                {% for page_number in page_obj105.paginator.page_range %}
+                  {% if page_number >= page_obj105.number|add:-5 and page_number <= page_obj105.number|add:5 %}
+                    {% if page_number == page_obj105.number %}
+      
+                      {% for news in news_list105 %}
+                        {% if forloop.counter > page_number|add:-1|mul:3 and forloop.counter <= page_number|mul:3 %}
+                        <div class="row mb-5">
+                          <div class="col-lg-6">
+                            <img
+                            src="{{ news.nd_img }}"
+                            class="img-fluid1" alt="world-news" />
+                          </div>
+                          <div class="col-lg-6">
+                            <h1 class="font-weight-600 mt-5">
+                              {{ news.n_title }}
+                            </h1>
+                            <p>
+                              {{ news.nso_content }}
+                            </p>
+                            <a href="{% url 'travel' %}" class="font-weight-bold text-dark pt-2">Read Article</a>
+                          </div>
+                        </div>
+                        {% endif %}
+                      {% endfor %}
+      
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <!-- 페이징처리 끝 -->
+      
+          </div>
+        </div>
+      
+      
+      
+        <!-- 페이징처리 시작 -->
+          <div id="paging">
+            <ul class="pagination justify-content-center" style="margin-top: 2rem;">
+              <!-- 이전페이지 -->
+              {% if page_obj105.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?&page={{ page_obj105.previous_page_number }}">이전</a>
+                <!-- href로 뎁스 설정 -->
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+              </li>
+              {% endif %}
+                <!-- 페이지리스트 -->
+                {% for page_number in page_obj105.paginator.page_range %}
+                  {% if page_number >= page_obj105.number|add:-5 and page_number <= page_obj105.number|add:5 %}
+                    {% if page_number == page_obj105.number %}
+      
+                      <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
+                      </li>
+                    {% else %}
+                      <li class="page-item">
+                        <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
+                      </li>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              <!-- 다음페이지 -->
+              {% if page_obj105.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?&page={{ page_obj105.next_page_number }}">다음</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                </li>
+              {% endif %}
+            </ul>
+        </div>
+        <!-- 페이징처리 끝 -->
+
     </div>
+    
   </body>
