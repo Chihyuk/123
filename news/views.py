@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.core.paginator import Paginator
+from django.views.generic import TemplateView
 from .models import *
 
 # -2022.01.24 park_jong_won
@@ -29,45 +30,57 @@ def want_category(c_id):
         where c_id = {c_id}"""
     return query
 
-
-def find_index_news(c_id):
-    code = """
-    <!-- 내용 처리 시작 -->
-            <div id="autocontent">
-              <div class="page-list" style="margin-top: 2rem;">
-                <!-- 페이지리스트 -->
-                {% for page_number in page_obj.paginator.page_range %}
-                  {% if page_number >= page_obj.number|add:-5 and page_number <= page_obj.number|add:5 %}
-                    {% if page_number == page_obj.number %}
-
-                      {% for news in news_list100 %}
-                        {% if forloop.counter > page_number|add:-1|mul:3 and forloop.counter <= page_number|mul:3 %}
-                        <div class="row mb-5">
-                          <div class="col-lg-6">
-                            <img
-                            src="{{ news.nd_img }}"
-                            class="img-fluid1" alt="world-news" />
-                          </div>
-                          <div class="col-lg-6">
-                            <h1 class="font-weight-600 mt-5">
-                              {{ news.n_title }}
-                            </h1>
-                            <p>
-                              {{ news.nso_content }}
-                            </p>
-                            <a href="{% url 'travel' %}" class="font-weight-bold text-dark pt-2">Read Article</a>
-                          </div>
-                        </div>
-                        {% endif %}
-                      {% endfor %}
-
-                    {% endif %}
-                  {% endif %}
-                {% endfor %}
-              </div>
-            </div>
-            <!-- 페이징처리 끝 -->
+def find_cat(c_id):
+    query = f"""
+    select c_id, c_name from N_category
     """
+    return query
+
+class ArticleListView(TemplateView):
+    template_name = 'autopage.html'
+    c_id = 100
+    query = want_category(c_id)
+    cat_query = find_cat(c_id)
+    news_list = News.objects.raw(query)
+    category = N_Category.objects.raw(cat_query)
+
+    def get(self, req, *args, **kwargs):
+        print(req.GET)
+        page = req.GET.get('page', '1') #GET 방식으로 정보를 받아오는 데이터
+        paginator = Paginator(self.news_list, '10') #Paginator(분할될 객체, 페이지 당 담길 객체수)
+        page_obj = paginator.page(page)
+
+        ctx = {
+            'category' : self.category,
+            'page_obj': page_obj,
+            'news_list' : self.news_list
+        }
+
+        return self.render_to_response(ctx)
+
+    def get_queryset(self):
+        if not self.query:
+            self.query = News.objects.all()
+        return self.query
+    
+    
+def test(req):
+    log(req)
+    query = want_category(100)
+    news_list = News.objects.raw(query) #models.py Board 클래스의 모든 객체를 board_list에 담음
+
+    # news_list100 페이징 처리
+    page = req.GET.get('page', '1') #GET 방식으로 정보를 받아오는 데이터
+    paginator = Paginator(news_list, '10') #Paginator(분할될 객체, 페이지 당 담길 객체수)
+    page_obj = paginator.page(page) #페이지 번호를 받아 해당 페이지를 리턴 get_page 권장
+
+    testhtml = testHTML(page_obj, news_list)
+
+
+    return render(req, "test.html", {'page_obj100':page_obj, 'news_list100':news_list, 'testhtml':testhtml})
+
+
+
 
 
 def index(req):

@@ -5,6 +5,8 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name="index"),
+    path('test/', views.test, name="test"),
+    path('test2/', views.ArticleListView.as_view()),
     path("author/", views.author, name="author"),
     path("politics/", views.politics, name="politics"),
     path("post/", views.post, name="post"),

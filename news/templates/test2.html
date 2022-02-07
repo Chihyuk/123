@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="zxx">
+  <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta http-equiv="refresh" content="300">
+  <title>World Vision</title>
+  <!-- plugin css for this page -->
+  <link rel="stylesheet" href="{% static 'assets/vendors/mdi/css/materialdesignicons.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/vendors/aos/dist/aos.css/aos.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/vendors/owl.carousel/dist/assets/owl.carousel.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'assets/vendors/owl.carousel/dist/assets/owl.theme.default.min.css' %}" />
+  <!-- End plugin css for this page -->
+  <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" />
+  <!-- inject:css -->
+  <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+  <!-- endinject -->
+  <script type="text/javascript">
+    function showClock() {
+      var currentDate = new Date();
+      var divClock = document.getElementById('divClock');
+      var msg = "";
+      if (currentDate.getHours() > 12) {
+        msg += "오후 ";
+        msg += currentDate.getHours() - 12 + "시 ";
+      }
+      else {
+        msg += "오전 ";
+        msg += currentDate.getHours() + "시 ";
+      }
+
+      msg += currentDate.getMinutes() + "분 ";
+
+      divClock.innerText = msg;
+
+      if (currentDate.getMinutes() > 58) {
+        divClock.style.color = "red";
+      }
+      setTimeout(showClock, 1000);
+    }
+  </script>
+  <script>
+    // var request = new XMLHttpRequest();
+    var start = Date.now();
+    var point = null;
+    window.addEventListener('scroll', function () {
+      let delta = Date.now() - start;
+      point = window.scrollY;
+      if (delta >= 3000) { //3초
+        $.ajax({
+          url: '/news/',
+          type: 'POST',
+          dataType: 'JSON',
+          data: {
+            'scroll': point,
+            'deltaTime': delta,
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+          },
+          headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+          succes: function () {
+            alert("성공")
+          },
+          // error: function(xhr, textStatus, thrownError){
+          //   alert("Could not send URL to Django. Error: " + xhr.status + ": " + xhr.responseText);
+          // }
+
+        })
+      }
+      start = Date.now()
+    })
+  </script>
+  </head>
+</html>
+  <body onload="showClock()">
+    <div class="container-scroller">
+      <div class="main-panel">
+        <header id="header">
+          <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+              <div class="d-flex justify-content-between align-items-center navbar-top">
+                <ul class="navbar-left">
+                  <li>
+                    <div id="divClock" class="clock"></div>
+                  </li>
+                </ul>
+                <div>
+                  <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'assets/images/logo.svg' %}"
+                    alt="" /></a>
+                </div>
+                <div class="d-flex">
+                  <ul class="navbar-right">
+                  </ul>
+                  <ul class="social-media">
+                    <li>
+                      <a href="https://www.instagram.com/?hl=ko">
+                        <i class="mdi mdi-instagram"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://www.facebook.com/">
+                        <i class="mdi mdi-facebook"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://www.youtube.com/">
+                        <i class="mdi mdi-youtube"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://www.linkedin.com/">
+                        <i class="mdi mdi-linkedin"></i>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="https://twitter.com/">
+                        <i class="mdi mdi-twitter"></i>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="navbar-bottom-menu">
+                <button class="navbar-toggler" type="button" data-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse justify-content-center collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav d-lg-flex justify-content-between align-items-center">
+                    <li>
+                      <button class="navbar-close">
+                        <i class="mdi mdi-close"></i>
+                      </button>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="nav-link active" href="{% url 'index' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'author' %}">언론사별</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'politics' %}">정치</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'post' %}">경제</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'business' %}">사회</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'contactus' %}">생활/문화</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'art' %}">IT/과학</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'world' %}">세계</a>
+                    </li>
+                    <li class="nav-item">
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </header>
+
+        {% load mathfilters %}
+        <div class="container">
+
+          <div class="world-news">
+            
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="d-flex position-relative  float-left">
+                  <h3 class="section-title">정치</h3>
+                </div>
+              </div>
+            </div>
+      
+            <!-- 내용 처리 시작 -->
+            <div id="autocontent">
+              <div class="page-list" style="margin-top: 2rem;">
+                <!-- 페이지리스트 -->
+                {% for page_number in page_obj100.paginator.page_range %}
+                  {% if page_number >= page_obj100.number|add:-5 and page_number <= page_obj100.number|add:5 %}
+                    {% if page_number == page_obj100.number %}
+      
+                      {% for news in news_list100 %}
+                        {% if forloop.counter > page_number|add:-1|mul:3 and forloop.counter <= page_number|mul:3 %}
+                        <div class="row mb-5">
+                          <div class="col-lg-6">
+                            <img
+                            src="{{ news.nd_img }}"
+                            class="img-fluid1" alt="world-news" />
+                          </div>
+                          <div class="col-lg-6">
+                            <h1 class="font-weight-600 mt-5">
+                              {{ news.n_title }}
+                            </h1>
+                            <p>
+                              {{ news.nso_content }}
+                            </p>
+                            <a href="{% url 'travel' %}" class="font-weight-bold text-dark pt-2">Read Article</a>
+                          </div>
+                        </div>
+                        {% endif %}
+                      {% endfor %}
+      
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            <!-- 페이징처리 끝 -->
+      
+          </div>
+        </div>
+      
+      
+      
+        <!-- 페이징처리 시작 -->
+          <div id="paging">
+            <ul class="pagination justify-content-center" style="margin-top: 2rem;">
+              <!-- 이전페이지 -->
+              {% if page_obj100.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?&page={{ page_obj100.previous_page_number }}">이전</a>
+                <!-- href로 뎁스 설정 -->
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+              </li>
+              {% endif %}
+                <!-- 페이지리스트 -->
+                {% for page_number in page_obj100.paginator.page_range %}
+                  {% if page_number >= page_obj100.number|add:-5 and page_number <= page_obj100.number|add:5 %}
+                    {% if page_number == page_obj100.number %}
+      
+                      <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
+                      </li>
+                    {% else %}
+                      <li class="page-item">
+                        <a class="page-link" href="?&page={{ page_number }}">{{ page_number }}</a>
+                      </li>
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              <!-- 다음페이지 -->
+              {% if page_obj100.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?&page={{ page_obj100.next_page_number }}">다음</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+                </li>
+              {% endif %}
+            </ul>
+        </div>
+        <!-- 페이징처리 끝 -->
+
+    </div>
+    
+  </body>
